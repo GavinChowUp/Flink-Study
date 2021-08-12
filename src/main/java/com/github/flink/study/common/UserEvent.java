@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 @Builder()
 public class UserEvent
 {
-    private Integer userID;
+    private String userID;
     private LocalDateTime eventTime;
-    private String eventType;
-    private Integer productID;
+    private UserEventType userEventType;
+    private String productID;
     private Double productPrice;
 }

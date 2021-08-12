@@ -32,7 +32,6 @@ public class StudyAggregations
     private static class AverageAggregateFunction
             implements AggregateFunction<UserEvent, Tuple2<Double, Long>, Double>
     {
-
         @Override
         public Tuple2<Double, Long> createAccumulator()
         {

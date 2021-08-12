@@ -2,13 +2,14 @@ package com.github.flink.study.common;
 
 import org.apache.flink.streaming.api.functions.source.SourceFunction;
 
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Random;
 
 public class FakeSource
         implements SourceFunction<UserEvent>
 {
-    private static final Random random = new Random();
+    private static final Random SECURE_RANDOM = new SecureRandom();
     private volatile boolean isRunning = true;
 
     private long sleepMillis;
@@ -23,17 +24,23 @@ public class FakeSource
         this.sleepMillis = sleepMills;
     }
 
+    public static <T extends Enum<T>> T randomEnum(Class<T> clazz)
+    {
+        int x = SECURE_RANDOM.nextInt(clazz.getEnumConstants().length);
+        return clazz.getEnumConstants()[x];
+    }
+
     @Override
     public void run(SourceContext<UserEvent> ctx)
             throws InterruptedException
     {
         while (isRunning) {
             ctx.collect(UserEvent.builder()
-                    .userID(random.nextInt(10))
+                    .userID("user_" + SECURE_RANDOM.nextInt(10))
                     .eventTime(LocalDateTime.now())
-                    .eventType("browser")
-                    .productID(random.nextInt(20))
-                    .productPrice(Math.random() * 100)
+                    .userEventType(randomEnum(UserEventType.class))
+                    .productID("product_" + SECURE_RANDOM.nextInt(20))
+                    .productPrice(Double.valueOf(String.format("%.2f", Math.random() * 100)))
                     .build());
             Thread.sleep(sleepMillis);
         }

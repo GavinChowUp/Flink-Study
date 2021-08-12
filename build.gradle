@@ -1,32 +1,36 @@
-
 plugins {
-    id 'java'
-    id 'checkstyle'
+  id 'java'
+  id 'checkstyle'
 }
 
 group 'com.github.flink.study'
 version '1.0-SNAPSHOT'
 
 repositories {
-    mavenCentral()
+  mavenCentral()
 }
 
 dependencies {
-    compileOnly group: 'org.apache.flink', name: 'flink-streaming-java_2.12', version: '1.13.2'
-    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
-    implementation group: 'joda-time', name: 'joda-time', version: '2.10'
-    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
-    implementation group: 'org.apache.flink', name: 'flink-clients_2.12', version: '1.13.2'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.4'
-    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.32'
-    implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.32'
+  compileOnly group: 'org.apache.flink', name: 'flink-streaming-java_2.12', version: '1.13.2'
+  compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
+  implementation group: 'joda-time', name: 'joda-time', version: '2.10'
+  annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
+  implementation group: 'org.apache.flink', name: 'flink-clients_2.12', version: '1.13.2'
+  implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.4'
+  implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.32'
+  implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.32'
 }
 
 test {
-    useJUnitPlatform()
+  useJUnitPlatform()
 }
 
 checkstyle {
-    toolVersion = '8.36.1'
-    configFile = file("${rootProject.projectDir}/checkstyle/facebook_checks.xml")
+  toolVersion = '8.36.1'
+  configFile = file("${rootProject.projectDir}/checkstyle/facebook_checks.xml")
+}
+
+task initPreHooks(type: Copy) {
+  from file("${rootProject.projectDir}/checkstyle/pre-commit.sh")
+  into file("${rootProject.projectDir}/.git/hooks/")
 }

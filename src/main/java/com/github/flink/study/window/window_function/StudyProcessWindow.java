@@ -32,11 +32,12 @@ public class StudyProcessWindow
         env.execute("Processing window Job");
     }
 
-    private static class SumProcessWindow
-            extends ProcessWindowFunction<UserEvent, String, Integer, TimeWindow>
+    //获取Window size内，每个用户浏览商品的总价值
+    public static class SumProcessWindow
+            extends ProcessWindowFunction<UserEvent, String, String, TimeWindow>
     {
         @Override
-        public void process(Integer key, ProcessWindowFunction<UserEvent, String, Integer, TimeWindow>.Context context, Iterable<UserEvent> elements, Collector<String> out)
+        public void process(String key, ProcessWindowFunction<UserEvent, String, String, TimeWindow>.Context context, Iterable<UserEvent> elements, Collector<String> out)
         {
             double sum = 0d;
             int count = 0;
@@ -47,7 +48,8 @@ public class StudyProcessWindow
             String windowStart = new DateTime(context.window().getStart(), DateTimeZone.forID("+08:00")).toString("yyyy-MM-dd HH:mm:ss");
             String windowEnd = new DateTime(context.window().getEnd(), DateTimeZone.forID("+08:00")).toString("yyyy-MM-dd HH:mm:ss");
 
-            String record = "Key: " + key + " 窗口开始时间: " + windowStart + " 窗口结束时间: " + windowEnd + " 浏览的商品总价值: " + sum + "elements size:" + count;
+            String record = "Key: " + key + " 窗口开始时间: "
+                    + windowStart + " 窗口结束时间: " + windowEnd + " 浏览的商品总价值: " + sum + " elements size:" + count;
             out.collect(record);
         }
     }
