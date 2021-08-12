@@ -13,7 +13,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
 //获取Window size内，每个用户浏览商品的总价值
-public class StudyProcessWindow
+public class ProcessWindowDemo
 {
     public static void main(String[] args)
             throws Exception
@@ -24,7 +24,7 @@ public class StudyProcessWindow
                 .addSource(new FakeSource())
                 .name("fake-test-source");
 
-        source.keyBy(UserEvent::getUserID)
+        source.keyBy(UserEvent::getUserId)
                 .window(TumblingProcessingTimeWindows.of(Time.seconds(5)))
                 .process(new SumProcessWindow())
                 .print();

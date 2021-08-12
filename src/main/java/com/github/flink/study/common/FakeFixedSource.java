@@ -3,9 +3,11 @@ package com.github.flink.study.common;
 import org.apache.flink.streaming.api.functions.source.SourceFunction;
 
 import java.security.SecureRandom;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Random;
 
-public class FakeSource
+public class FakeFixedSource
         implements SourceFunction<UserEvent>
 {
     private static final Random SECURE_RANDOM = new SecureRandom();
@@ -13,12 +15,12 @@ public class FakeSource
 
     private long sleepMillis;
 
-    public FakeSource()
+    public FakeFixedSource()
     {
-        this(1000L);
+        this(3000L);
     }
 
-    private FakeSource(long sleepMills)
+    private FakeFixedSource(long sleepMills)
     {
         this.sleepMillis = sleepMills;
     }
@@ -36,7 +38,7 @@ public class FakeSource
         while (isRunning) {
             ctx.collect(UserEvent.builder()
                     .userId("user_" + SECURE_RANDOM.nextInt(10))
-                    .eventTime(System.currentTimeMillis())
+                    .eventTime(LocalDateTime.now().minusSeconds(SECURE_RANDOM.nextInt(3)).toEpochSecond(ZoneOffset.of("+08:00")))
                     .userEventType(randomEnum(UserEventType.class))
                     .productId("product_" + SECURE_RANDOM.nextInt(20))
                     .productPrice(Double.valueOf(String.format("%.2f", Math.random() * 100)))

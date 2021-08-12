@@ -16,7 +16,7 @@ dependencies {
   implementation group: 'joda-time', name: 'joda-time', version: '2.10'
   annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
   implementation group: 'org.apache.flink', name: 'flink-clients_2.12', version: '1.13.2'
-  implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.4'
+  implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.12.4'
   implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.32'
   implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.32'
 }
@@ -30,7 +30,7 @@ checkstyle {
   configFile = file("${rootProject.projectDir}/checkstyle/facebook_checks.xml")
 }
 
-task initPreHooks(type: Copy) {
-  from file("${rootProject.projectDir}/checkstyle/pre-commit.sh")
-  into file("${rootProject.projectDir}/.git/hooks/")
+task initGitHooks {
+    [ 'sh', '-c', 'chmod +x .githooks/pre-commit' ].execute().text.trim()
+    [ 'sh', '-c', 'git config core.hooksPath .githooks' ].execute().text.trim()
 }

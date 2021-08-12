@@ -1,4 +1,4 @@
-package com.github.flink.study.window.window_function;
+package com.github.flink.study.window.split_stream;
 
 import com.github.flink.study.common.FakeSource;
 import com.github.flink.study.common.UserEvent;
@@ -10,7 +10,7 @@ import org.apache.flink.streaming.api.windowing.time.Time;
 import scala.Tuple2;
 
 //获取某个用户(keyBy)在窗口时间浏览的商品价格平均值(入：UserEvent,出：double)
-public class StudyAggregations
+public class SplitDemo
 {
     public static void main(String[] args)
             throws Exception
@@ -21,8 +21,9 @@ public class StudyAggregations
                 .addSource(new FakeSource())
                 .name("fake-test-source");
 
-        source.keyBy(UserEvent::getUserID)
+        source.keyBy(UserEvent::getUserId)
                 .window(TumblingProcessingTimeWindows.of(Time.seconds(5)))
+                .allowedLateness(Time.seconds(10))
                 .aggregate(new AverageAggregateFunction())
                 .print();
 

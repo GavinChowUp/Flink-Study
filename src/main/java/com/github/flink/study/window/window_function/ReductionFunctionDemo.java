@@ -16,7 +16,7 @@ import org.joda.time.DateTimeZone;
 //获取一段时间内(Window Size)每个用户(KeyBy)浏览的商品的最大价值的那条记录(UserEvent)
 //获取一段时间内(Window Size)每个用户(KeyBy)浏览的商品的最大价值的那条记录(UserEvent), 并获得所在窗口
 // 入：UserEvent,出UserEvent;
-public class StudyReductionFunction
+public class ReductionFunctionDemo
 {
     public static void main(String[] args)
             throws Exception
@@ -27,7 +27,7 @@ public class StudyReductionFunction
                 .addSource(new FakeSource())
                 .name("reduce-test-source");
 
-        source.keyBy(UserEvent::getUserID)
+        source.keyBy(UserEvent::getUserId)
                 .window(TumblingProcessingTimeWindows.of(Time.seconds(5)))
                 .reduce(new MaxReduceFunction(), new MaxProcessWindowFunction())
                 .print();
@@ -40,7 +40,8 @@ public class StudyReductionFunction
         @Override
         public UserEvent reduce(UserEvent value1, UserEvent value2)
         {
-            return value1.getProductPrice() > value2.getProductPrice() ? value1 : value2;
+            value1.setProductPrice(value1.getProductPrice() + value2.getProductPrice());
+            return value1;
         }
     }
 

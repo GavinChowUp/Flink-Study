@@ -1,17 +1,22 @@
 package com.github.flink.study.common;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
 
 @Data
 @Builder()
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserEvent
+        implements Serializable
 {
-    private String userID;
-    private LocalDateTime eventTime;
+    private String userId;
+    private Long eventTime;
     private UserEventType userEventType;
-    private String productID;
+    private String productId;
     private Double productPrice;
 }
