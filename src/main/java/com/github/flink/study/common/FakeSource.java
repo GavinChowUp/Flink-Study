@@ -15,16 +15,17 @@ public class FakeSource
 
     public FakeSource()
     {
-        new FakeSource(500L);
+        this(500L);
     }
 
-    public FakeSource(long sleepMills)
+    private FakeSource(long sleepMills)
     {
         this.sleepMillis = sleepMills;
     }
 
     @Override
     public void run(SourceContext<UserEvent> ctx)
+            throws InterruptedException
     {
         while (isRunning) {
             ctx.collect(UserEvent.builder()
@@ -32,8 +33,9 @@ public class FakeSource
                     .eventTime(LocalDateTime.now())
                     .eventType("browser")
                     .productID(random.nextInt(20))
-                    .productPrice(Math.random())
+                    .productPrice(Math.random() * 100)
                     .build());
+            Thread.sleep(sleepMillis);
         }
     }
 

@@ -8,6 +8,8 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.windowing.assigners.TumblingProcessingTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
 
+//获取一段时间内(Window Size)每个用户(KeyBy)浏览的商品的最大价值的那条记录(UserEvent)
+// 入：UserEvent,出UserEvent
 @SuppressWarnings("checkstyle:HideUtilityClassConstructor")
 public class StudyReductionFunction
 {
@@ -18,11 +20,14 @@ public class StudyReductionFunction
 
         DataStream<UserEvent> source = env
                 .addSource(new FakeSource())
-                .name("reduce-test");
+                .name("reduce-test-source");
 
         source.keyBy(UserEvent::getUserID)
                 .window(TumblingProcessingTimeWindows.of(Time.seconds(5)))
-                .reduce((ReduceFunction<UserEvent>) (value1, value2) -> value1.getProductPrice() > value2.getProductPrice() ? value1 : value2).print();
-        env.execute("test-source");
+                .reduce(
+                        (ReduceFunction<UserEvent>) (value1, value2) -> value1.getProductPrice() > value2.getProductPrice() ? value1 : value2
+                )
+                .print();
+        env.execute("reduce-test");
     }
 }
