@@ -2,6 +2,7 @@ package com.github.flink.study.window.window_function;
 
 import com.github.flink.study.common.FakeSource;
 import com.github.flink.study.common.UserEvent;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.common.functions.AggregateFunction;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
@@ -10,11 +11,13 @@ import org.apache.flink.streaming.api.windowing.time.Time;
 import scala.Tuple2;
 
 //获取某个用户(keyBy)在窗口时间浏览的商品价格平均值(入：UserEvent,出：double)
+@Slf4j
 public class AggregationDemo
 {
     public static void main(String[] args)
             throws Exception
     {
+        log.info("helll");
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
         DataStream<UserEvent> source = env
