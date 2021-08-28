@@ -10,14 +10,21 @@ repositories {
   mavenCentral()
 }
 
+ext {
+  flinkVersion = '1.13.2'
+  lombokVersion = '1.18.20'
+}
+
 dependencies {
-  compileOnly group: 'org.apache.flink', name: 'flink-streaming-java_2.12', version: '1.13.2'
-  compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
-  implementation group: 'joda-time', name: 'joda-time', version: '2.10'
-  annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.20'
-  implementation group: 'org.apache.flink', name: 'flink-clients_2.12', version: '1.13.2'
-  implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.12.4'
-  implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.32'
+  compileOnly "org.apache.flink:flink-streaming-java_2.12:$flinkVersion"
+  implementation "org.apache.flink:flink-clients_2.12:$flinkVersion"
+  implementation "org.apache.flink:flink-connector-kafka_2.12:$flinkVersion"
+  implementation "org.apache.flink:flink-connector-base:$flinkVersion"
+  compileOnly "org.projectlombok:lombok:$lombokVersion"
+  annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+  implementation 'com.fasterxml.jackson.core:jackson-core:2.12.5'
+  implementation "joda-time:joda-time:2.10"
+  implementation "org.slf4j:slf4j-simple:1.7.32"
 }
 
 test {
@@ -30,6 +37,6 @@ checkstyle {
 }
 
 task initGitHooks {
-    [ 'sh', '-c', 'chmod +x .githooks/pre-commit' ].execute().text.trim()
-    [ 'sh', '-c', 'git config core.hooksPath .githooks' ].execute().text.trim()
+  ['sh', '-c', 'chmod +x .githooks/pre-commit'].execute().text.trim()
+  ['sh', '-c', 'git config core.hooksPath .githooks'].execute().text.trim()
 }

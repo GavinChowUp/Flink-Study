@@ -2,26 +2,25 @@ package com.github.flink.study.watermark;
 
 import com.github.flink.study.common.UserCountAgg;
 import com.github.flink.study.common.UserEvent;
-import com.github.flink.study.source.KafkaSourceDemo;
-import org.apache.flink.streaming.api.datastream.DataStream;
+import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
 
-public class WatermarkDemo
+//只有窗口，没有设置watermark， flink默认抛出异常
+public class OnlyWindowDemo
 {
     public static void main(String[] args)
             throws Exception
     {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-        DataStream<UserEvent> kafkaSource = new KafkaSourceDemo().createKafkaSource(env);
-
-        kafkaSource
+        ObjectMapper objectMapper = new ObjectMapper();
+        env.socketTextStream("localhost", 9999)
+                .map(event -> objectMapper.readValue(event, UserEvent.class))
                 .keyBy(UserEvent::getUserId)
-                .window(TumblingEventTimeWindows.of(Time.seconds(3L)))
-                .aggregate(new UserCountAgg())
-                .print("result==>");
+                .window(TumblingEventTimeWindows.of(Time.seconds(3)))
+                .aggregate(new UserCountAgg());
 
-        env.execute("kafka source demo");
+        env.execute("Processing window Job");
     }
 }

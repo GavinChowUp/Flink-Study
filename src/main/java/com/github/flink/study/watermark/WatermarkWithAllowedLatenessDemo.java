@@ -8,7 +8,10 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
 
-public class WatermarkDemo
+/**
+ * watermark 的作用是: 触发窗口计算
+ */
+public class WatermarkWithAllowedLatenessDemo
 {
     public static void main(String[] args)
             throws Exception
@@ -19,6 +22,7 @@ public class WatermarkDemo
         kafkaSource
                 .keyBy(UserEvent::getUserId)
                 .window(TumblingEventTimeWindows.of(Time.seconds(3L)))
+                .allowedLateness(Time.seconds(2L))
                 .aggregate(new UserCountAgg())
                 .print("result==>");
 

@@ -1,0 +1,32 @@
+case1==> window: 3s,watermark: 2s
+```json
+{"userId": "1","eventTime": 1630041541000,"userEventType": "WEB","productId": "product_14","productPrice": "72.84"}
+{"userId": "1","eventTime": 1630041542000,"userEventType": "WEB","productId": "product_14","productPrice": "72.84"}
+{"userId": "1","eventTime": 1630041543000,"userEventType": "WEB","productId": "product_14","productPrice": "72.84"}
+{"userId": "1","eventTime": 1630041544000,"userEventType": "WEB","productId": "product_14","productPrice": "72.84"}
+{"userId": "1","eventTime": 1630041545000,"userEventType": "WEB","productId": "product_14","productPrice": "72.84"}
+```
+触发第一次窗口计算(计算count)，window = [0,3) count=2，产出1条数据
+*******************************************************************************************************************
+```json
+{"userId": "1","eventTime": 1630041546000,"userEventType": "WEB","productId": "product_14","productPrice": "72.84"}
+{"userId": "1","eventTime": 1630041547000,"userEventType": "WEB","productId": "product_14","productPrice": "72.84"}
+{"userId": "1","eventTime": 1630041548000,"userEventType": "WEB","productId": "product_14","productPrice": "72.84"}
+```
+触发第二次窗口计算(计算count)，window=[3,6) count=3，产出1条数据
+-------------------------------------------------------------------------------------------------------------------
+
+case2==> window: 3s,watermark: 2s，allowedLateness:2s
+```json
+{"userId": "1","eventTime": 1630041541000,"userEventType": "WEB","productId": "product_14","productPrice": "72.84"}
+{"userId": "1","eventTime": 1630041542000,"userEventType": "WEB","productId": "product_14","productPrice": "72.84"}
+{"userId": "1","eventTime": 1630041543000,"userEventType": "WEB","productId": "product_14","productPrice": "72.84"}
+{"userId": "1","eventTime": 1630041544000,"userEventType": "WEB","productId": "product_14","productPrice": "72.84"}
+{"userId": "1","eventTime": 1630041545000,"userEventType": "WEB","productId": "product_14","productPrice": "72.84"}
+触发窗口计算，window=[0,3) count=2，产出1条数据
+{"userId": "1","eventTime": 1630041541000,"userEventType": "WEB","productId": "product_14","productPrice": "72.84"}
+触发窗口计算，window=[0,3) count=3，产出1条数据
+{"userId": "1","eventTime": 1630041541000,"userEventType": "WEB","productId": "product_14","productPrice": "72.84"}
+触发窗口计算，window=[0,3) count=4，产出1条数据
+{"userId": "1","eventTime": 1630041547000,"userEventType": "WEB","productId": "product_14","productPrice": "72.84"}
+```
