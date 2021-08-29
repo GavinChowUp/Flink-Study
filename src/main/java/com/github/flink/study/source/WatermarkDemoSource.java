@@ -1,13 +1,13 @@
-package com.github.flink.study.common;
+package com.github.flink.study.source;
 
+import com.github.flink.study.common.UserEvent;
+import com.github.flink.study.common.UserEventType;
 import org.apache.flink.streaming.api.functions.source.SourceFunction;
 
 import java.security.SecureRandom;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.Random;
 
-public class FakeFixedSource
+public class WatermarkDemoSource
         implements SourceFunction<UserEvent>
 {
     private static final Random SECURE_RANDOM = new SecureRandom();
@@ -15,12 +15,12 @@ public class FakeFixedSource
 
     private long sleepMillis;
 
-    public FakeFixedSource()
+    public WatermarkDemoSource()
     {
-        this(3000L);
+        this(500L);
     }
 
-    private FakeFixedSource(long sleepMills)
+    private WatermarkDemoSource(long sleepMills)
     {
         this.sleepMillis = sleepMills;
     }
@@ -37,8 +37,8 @@ public class FakeFixedSource
     {
         while (isRunning) {
             ctx.collect(UserEvent.builder()
-                    .userId("user_" + SECURE_RANDOM.nextInt(10))
-                    .eventTime(LocalDateTime.now().minusSeconds(SECURE_RANDOM.nextInt(3)).toEpochSecond(ZoneOffset.of("+08:00")))
+                    .userId("user_" + 1)
+                    .eventTime(System.currentTimeMillis())
                     .userEventType(randomEnum(UserEventType.class))
                     .productId("product_" + SECURE_RANDOM.nextInt(20))
                     .productPrice(Double.valueOf(String.format("%.2f", Math.random() * 100)))

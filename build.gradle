@@ -17,14 +17,15 @@ ext {
 
 dependencies {
   compileOnly "org.apache.flink:flink-streaming-java_2.12:$flinkVersion"
+  compileOnly "org.projectlombok:lombok:$lombokVersion"
   implementation "org.apache.flink:flink-clients_2.12:$flinkVersion"
   implementation "org.apache.flink:flink-connector-kafka_2.12:$flinkVersion"
   implementation "org.apache.flink:flink-connector-base:$flinkVersion"
-  compileOnly "org.projectlombok:lombok:$lombokVersion"
-  annotationProcessor "org.projectlombok:lombok:$lombokVersion"
   implementation 'com.fasterxml.jackson.core:jackson-core:2.12.5'
   implementation "joda-time:joda-time:2.10"
   implementation "org.slf4j:slf4j-simple:1.7.32"
+  implementation 'org.openjdk.jol:jol-core:0.16'
+  annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 }
 
 test {

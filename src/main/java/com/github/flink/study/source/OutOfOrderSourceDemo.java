@@ -11,7 +11,7 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
 import java.time.Duration;
 
-public class KafkaSourceDemo
+public class OutOfOrderSourceDemo
 {
     public DataStream<UserEvent> createKafkaSource(StreamExecutionEnvironment env)
     {

@@ -27,6 +27,9 @@ case2==> window: 3s,watermark: 2s，allowedLateness:2s
 {"userId": "1","eventTime": 1630041541000,"userEventType": "WEB","productId": "product_14","productPrice": "72.84"}
 触发窗口计算，window=[0,3) count=3，产出1条数据
 {"userId": "1","eventTime": 1630041541000,"userEventType": "WEB","productId": "product_14","productPrice": "72.84"}
-触发窗口计算，window=[0,3) count=4，产出1条数据
+触发窗口计算，window=[0,3) count=4……，产出1条数据
 {"userId": "1","eventTime": 1630041547000,"userEventType": "WEB","productId": "product_14","productPrice": "72.84"}
+窗口关闭
+{"userId": "1","eventTime": 1630041541000,"userEventType": "WEB","productId": "product_14","productPrice": "72.84"}
+窗口已经关闭，sideOutput输出
 ```

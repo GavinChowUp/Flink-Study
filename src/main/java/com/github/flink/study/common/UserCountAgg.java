@@ -3,29 +3,29 @@ package com.github.flink.study.common;
 import org.apache.flink.api.common.functions.AggregateFunction;
 
 public class UserCountAgg
-        implements AggregateFunction<UserEvent, Double, String>
+        implements AggregateFunction<UserEvent, UserEventCount, UserEventCount>
 {
     @Override
-    public Double createAccumulator()
+    public UserEventCount createAccumulator()
     {
-        return 0d;
+        return UserEventCount.builder().count(0).build();
     }
 
     @Override
-    public Double add(UserEvent value, Double accumulator)
+    public UserEventCount add(UserEvent value, UserEventCount accumulator)
     {
-        return accumulator + 1;
+        return UserEventCount.builder().userId(value.getUserId()).count(accumulator.getCount() + 1).build();
     }
 
     @Override
-    public String getResult(Double accumulator)
+    public UserEventCount getResult(UserEventCount accumulator)
     {
-        return "User count:" + accumulator;
+        return accumulator;
     }
 
     @Override
-    public Double merge(Double a, Double b)
+    public UserEventCount merge(UserEventCount a, UserEventCount b)
     {
-        return a + b;
+        return UserEventCount.builder().userId(a.getUserId()).count(a.getCount() + b.getCount()).build();
     }
 }

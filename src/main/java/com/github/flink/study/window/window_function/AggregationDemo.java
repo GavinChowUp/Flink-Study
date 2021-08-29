@@ -17,7 +17,6 @@ public class AggregationDemo
     public static void main(String[] args)
             throws Exception
     {
-        log.info("helll");
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
         DataStream<UserEvent> source = env
