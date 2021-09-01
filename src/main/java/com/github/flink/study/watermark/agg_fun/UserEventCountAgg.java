@@ -1,8 +1,9 @@
-package com.github.flink.study.common;
+package com.github.flink.study.watermark.agg_fun;
 
+import com.github.flink.study.common.UserEvent;
 import org.apache.flink.api.common.functions.AggregateFunction;
 
-public class UserCountAgg
+public class UserEventCountAgg
         implements AggregateFunction<UserEvent, UserEventCount, UserEventCount>
 {
     @Override

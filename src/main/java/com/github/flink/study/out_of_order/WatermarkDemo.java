@@ -1,8 +1,8 @@
 package com.github.flink.study.out_of_order;
 
-import com.github.flink.study.common.UserCountAgg;
 import com.github.flink.study.common.UserEvent;
 import com.github.flink.study.source.OutOfOrderSourceDemo;
+import com.github.flink.study.watermark.agg_fun.UserEventCountAgg;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
@@ -19,7 +19,7 @@ public class WatermarkDemo
         kafkaSource
                 .keyBy(UserEvent::getUserId)
                 .window(TumblingEventTimeWindows.of(Time.seconds(3L)))
-                .aggregate(new UserCountAgg())
+                .aggregate(new UserEventCountAgg())
                 .print("result==>");
 
         env.execute("kafka source demo");

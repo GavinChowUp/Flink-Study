@@ -1,4 +1,4 @@
-package com.github.flink.study.common;
+package com.github.flink.study.watermark.agg_fun;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,9 +11,10 @@ import java.io.Serializable;
 @Builder()
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserEventCount
+public class UserEventCountWithTimeField
         implements Serializable
 {
     private String userId;
     private Integer count;
+    private Long eventTime;
 }
