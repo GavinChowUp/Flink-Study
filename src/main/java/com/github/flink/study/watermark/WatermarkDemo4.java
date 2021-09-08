@@ -30,7 +30,6 @@ public class WatermarkDemo4
         DataStream<UserEvent> source = env
                 .addSource(new WatermarkDemoSource())
                 .name("watermark-test");
-        source.print("input==>");
 
         SingleOutputStreamOperator<UserEventCount> aggregate = source
                 .assignTimestampsAndWatermarks(WatermarkStrategy.<UserEvent>forBoundedOutOfOrderness(Duration.ofSeconds(3L))
@@ -41,10 +40,9 @@ public class WatermarkDemo4
                 {
                     @Override
                     public void apply(String s, TimeWindow window, Iterable<UserEventCount> input, Collector<UserEventCount> out)
-                            throws Exception
                     {
                         UserEventCount next = input.iterator().next();
-                        System.out.println(window);
+                        System.out.println("level-1 window:==>" + window);
                         out.collect(next);
                     }
                 });
@@ -58,12 +56,11 @@ public class WatermarkDemo4
                 {
                     @Override
                     public void process(String s, ProcessWindowFunction<UserEventCount, Object, String, TimeWindow>.Context context, Iterable<UserEventCount> elements, Collector<Object> out)
-                            throws Exception
                     {
-                        System.out.println(LocalDateTime.ofInstant(Instant.ofEpochMilli(context.currentWatermark()), TimeZone.getDefault().toZoneId()));
-                        System.out.println(context.window());
+                        System.out.println("level-2 watermark:==>" + LocalDateTime.ofInstant(Instant.ofEpochMilli(context.currentWatermark()), TimeZone.getDefault().toZoneId()));
+                        System.out.println("level-2 window:==>" + context.window());
                     }
-                }).print("process=====>");
+                }).print("level-2=====>");
 
         env.execute("kafka source demo");
     }
