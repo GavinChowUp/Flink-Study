@@ -11,7 +11,7 @@ case1==> window: 3s,watermark: 2s
 ```json
 {"userId": "1","eventTime": 1630041546000,"userEventType": "WEB","productId": "product_14","productPrice": "72.84"}
 {"userId": "1","eventTime": 1630041547000,"userEventType": "WEB","productId": "product_14","productPrice": "72.84"}
-{"userId": "1","eventTime": 1630041548000,"userEventType": "WEB","productId": "product_14","productPrice": "72.84"}
+{"userId": "1","eventTime": 1630041550000,"userEventType": "WEB","productId": "product_14","productPrice": "72.84"}
 ```
 触发第二次窗口计算(计算count)，window=[3,6) count=3，产出1条数据
 -------------------------------------------------------------------------------------------------------------------

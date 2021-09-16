@@ -17,7 +17,7 @@ public class WatermarkDemoSource
 
     public WatermarkDemoSource()
     {
-        this(500L);
+        this(5000L);
     }
 
     private WatermarkDemoSource(long sleepMills)
