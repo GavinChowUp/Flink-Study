@@ -23,7 +23,7 @@ public class OutOfOrderSourceDemo
 
         return env.fromSource(source,
                 WatermarkStrategy
-                        .<UserEvent>forBoundedOutOfOrderness(Duration.ofSeconds(2))
+                        .<UserEvent>forBoundedOutOfOrderness(Duration.ofSeconds(0))
                         .withTimestampAssigner((SerializableTimestampAssigner<UserEvent>) (element, recordTimestamp) -> element.getEventTime()),
                 "kafka source");
     }

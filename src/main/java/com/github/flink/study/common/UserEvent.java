@@ -19,4 +19,5 @@ public class UserEvent
     private UserEventType userEventType;
     private String productId;
     private Double productPrice;
+    private String stringEventTime;
 }

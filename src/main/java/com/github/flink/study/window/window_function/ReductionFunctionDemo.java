@@ -40,8 +40,7 @@ public class ReductionFunctionDemo
         @Override
         public UserEvent reduce(UserEvent value1, UserEvent value2)
         {
-            value1.setProductPrice(value1.getProductPrice() + value2.getProductPrice());
-            return value1;
+            return value2;
         }
     }
 
@@ -53,9 +52,10 @@ public class ReductionFunctionDemo
         {
             String windowStart = new DateTime(context.window().getStart(), DateTimeZone.forID("+08:00")).toString("yyyy-MM-dd HH:mm:ss");
             String windowEnd = new DateTime(context.window().getEnd(), DateTimeZone.forID("+08:00")).toString("yyyy-MM-dd HH:mm:ss");
+            String currentWatermark = new DateTime(context.currentWatermark(), DateTimeZone.forID("+08:00")).toString("yyyy-MM-dd HH:mm:ss");
 
             String record = "Key: " + key + " 窗口开始时间: " + windowStart + " 窗口结束时间: "
-                    + windowEnd + " 浏览的商品的最大价值对应的那条记录: " + elements.iterator().next();
+                    + windowEnd + " 当前水位时间: " + context.currentWatermark() + "[" + currentWatermark + "]" + " 浏览的商品的最大价值对应的那条记录: " + elements.iterator().next();
             out.collect(record);
         }
     }
