@@ -2,16 +2,20 @@ package com.github.flink.study.window.window_function;
 
 import com.github.flink.study.common.FakeSource;
 import com.github.flink.study.common.UserEvent;
+import org.apache.flink.api.common.eventtime.SerializableTimestampAssigner;
+import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.common.functions.ReduceFunction;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.windowing.ProcessWindowFunction;
-import org.apache.flink.streaming.api.windowing.assigners.TumblingProcessingTimeWindows;
+import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.util.Collector;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+
+import java.time.Duration;
 
 //获取一段时间内(Window Size)每个用户(KeyBy)浏览的商品的最大价值的那条记录(UserEvent)
 //获取一段时间内(Window Size)每个用户(KeyBy)浏览的商品的最大价值的那条记录(UserEvent), 并获得所在窗口
@@ -27,8 +31,11 @@ public class ReductionFunctionDemo
                 .addSource(new FakeSource())
                 .name("reduce-test-source");
 
-        source.keyBy(UserEvent::getUserId)
-                .window(TumblingProcessingTimeWindows.of(Time.seconds(5)))
+        source
+                .assignTimestampsAndWatermarks(WatermarkStrategy.<UserEvent>forBoundedOutOfOrderness(Duration.ofSeconds(3L))
+                        .withTimestampAssigner((SerializableTimestampAssigner<UserEvent>) (element, recordTimestamp) -> element.getEventTime()))
+                .keyBy(UserEvent::getUserId)
+                .window(TumblingEventTimeWindows.of(Time.seconds(5)))
                 .reduce(new MaxReduceFunction(), new MaxProcessWindowFunction())
                 .print();
         env.execute("reduce-test");

@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.common.functions.AggregateFunction;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.api.windowing.assigners.TumblingProcessingTimeWindows;
+import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
 import scala.Tuple2;
 
@@ -24,7 +24,7 @@ public class AggregationDemo
                 .name("fake-test-source");
 
         source.keyBy(UserEvent::getUserId)
-                .window(TumblingProcessingTimeWindows.of(Time.seconds(5)))
+                .window(TumblingEventTimeWindows.of(Time.seconds(5)))
                 .aggregate(new AverageAggregateFunction())
                 .print();
 

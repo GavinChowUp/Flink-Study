@@ -5,7 +5,7 @@ import com.github.flink.study.common.UserEvent;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.windowing.ProcessWindowFunction;
-import org.apache.flink.streaming.api.windowing.assigners.TumblingProcessingTimeWindows;
+import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.util.Collector;
@@ -25,7 +25,7 @@ public class ProcessWindowDemo
                 .name("fake-test-source");
 
         source.keyBy(UserEvent::getUserId)
-                .window(TumblingProcessingTimeWindows.of(Time.seconds(5)))
+                .window(TumblingEventTimeWindows.of(Time.seconds(5)))
                 .process(new SumProcessWindow())
                 .print();
 

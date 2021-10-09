@@ -6,7 +6,7 @@ import com.github.flink.study.window.window_function.ReductionFunctionDemo;
 import org.apache.flink.api.java.functions.KeySelector;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.api.windowing.assigners.TumblingProcessingTimeWindows;
+import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
 
 public class KeybySelectorDemo
@@ -21,7 +21,7 @@ public class KeybySelectorDemo
                 .name("fake-test-source");
 
         source.keyBy((KeySelector<UserEvent, String>) value -> value.getUserId() + "_" + value.getUserEventType())
-                .window(TumblingProcessingTimeWindows.of(Time.seconds(5)))
+                .window(TumblingEventTimeWindows.of(Time.seconds(5)))
                 .reduce(new ReductionFunctionDemo.MaxReduceFunction(), new ReductionFunctionDemo.MaxProcessWindowFunction())
                 .print();
 
