@@ -1,4 +1,4 @@
-package com.github.flink.study.type_erasure;
+package com.github.flink.study.other.type_erasure;
 
 import java.util.ArrayList;
 

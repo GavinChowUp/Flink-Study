@@ -1,7 +1,7 @@
 package com.github.flink.study.window.window_function;
 
-import com.github.flink.study.common.FakeSource;
 import com.github.flink.study.common.UserEvent;
+import com.github.flink.study.source.LocalMultipleUserEventsSource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.common.functions.AggregateFunction;
 import org.apache.flink.streaming.api.datastream.DataStream;
@@ -20,7 +20,7 @@ public class AggregationDemo
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
         DataStream<UserEvent> source = env
-                .addSource(new FakeSource())
+                .addSource(new LocalMultipleUserEventsSource())
                 .name("fake-test-source");
 
         source.keyBy(UserEvent::getUserId)

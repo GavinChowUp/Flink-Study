@@ -1,7 +1,7 @@
 package com.github.flink.study.window.keyby_selector;
 
-import com.github.flink.study.common.FakeSource;
 import com.github.flink.study.common.UserEvent;
+import com.github.flink.study.source.LocalMultipleUserEventsSource;
 import com.github.flink.study.window.window_function.ReductionFunctionDemo;
 import org.apache.flink.api.java.functions.KeySelector;
 import org.apache.flink.streaming.api.datastream.DataStream;
@@ -17,7 +17,7 @@ public class KeybySelectorDemo
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
         DataStream<UserEvent> source = env
-                .addSource(new FakeSource())
+                .addSource(new LocalMultipleUserEventsSource())
                 .name("fake-test-source");
 
         source.keyBy((KeySelector<UserEvent, String>) value -> value.getUserId() + "_" + value.getUserEventType())

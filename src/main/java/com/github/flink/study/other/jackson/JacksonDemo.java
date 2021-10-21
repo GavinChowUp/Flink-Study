@@ -1,4 +1,4 @@
-package com.github.flink.study.jackson;
+package com.github.flink.study.other.jackson;
 
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.ObjectMapper;

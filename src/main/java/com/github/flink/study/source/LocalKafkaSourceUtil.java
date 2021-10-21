@@ -1,7 +1,7 @@
 package com.github.flink.study.source;
 
 import com.github.flink.study.common.UserEvent;
-import com.github.flink.study.schema.UserEventDeserializeSchema;
+import com.github.flink.study.common.UserEventDeserializeSchema;
 import org.apache.flink.api.common.eventtime.SerializableTimestampAssigner;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.connector.kafka.source.KafkaSource;
@@ -11,9 +11,9 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
 import java.time.Duration;
 
-public class OutOfOrderSourceDemo
+public class LocalKafkaSourceUtil
 {
-    public DataStream<UserEvent> createKafkaSource(StreamExecutionEnvironment env)
+    public DataStream<UserEvent> createKafkaSourceWithWatermark(StreamExecutionEnvironment env)
     {
         KafkaSource<UserEvent> source = KafkaSource.<UserEvent>builder().setBootstrapServers("localhost:9092")
                 .setTopics("watermark_source")

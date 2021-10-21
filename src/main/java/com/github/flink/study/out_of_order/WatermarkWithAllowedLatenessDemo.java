@@ -1,7 +1,7 @@
 package com.github.flink.study.out_of_order;
 
 import com.github.flink.study.common.UserEvent;
-import com.github.flink.study.source.OutOfOrderSourceDemo;
+import com.github.flink.study.source.LocalKafkaSourceUtil;
 import com.github.flink.study.watermark.agg_fun.UserEventCount;
 import com.github.flink.study.watermark.agg_fun.UserEventCountAgg;
 import org.apache.flink.streaming.api.datastream.DataStream;
@@ -17,7 +17,7 @@ public class WatermarkWithAllowedLatenessDemo
             throws Exception
     {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-        DataStream<UserEvent> kafkaSource = new OutOfOrderSourceDemo().createKafkaSource(env);
+        DataStream<UserEvent> kafkaSource = new LocalKafkaSourceUtil().createKafkaSourceWithWatermark(env);
 
         SingleOutputStreamOperator<UserEventCount> aggregate = kafkaSource
                 .keyBy(UserEvent::getUserId)

@@ -1,22 +1,22 @@
 package com.github.flink.study.source;
 
 import com.github.flink.study.common.UserEvent;
-import com.github.flink.study.util.EventBuilder;
+import com.github.flink.study.util.EventBuilderUtil;
 import org.apache.flink.streaming.api.functions.source.SourceFunction;
 
-public class WatermarkDemoSource
+public class LocalSingleUserEventSource
         implements SourceFunction<UserEvent>
 {
     private volatile boolean isRunning = true;
 
     private long sleepMillis;
 
-    public WatermarkDemoSource()
+    public LocalSingleUserEventSource()
     {
         this(5000L);
     }
 
-    private WatermarkDemoSource(long sleepMills)
+    private LocalSingleUserEventSource(long sleepMills)
     {
         this.sleepMillis = sleepMills;
     }
@@ -26,7 +26,7 @@ public class WatermarkDemoSource
             throws InterruptedException
     {
         while (isRunning) {
-            EventBuilder.BuildUserEvent();
+            EventBuilderUtil.BuildUserEvent();
             Thread.sleep(sleepMillis);
         }
     }

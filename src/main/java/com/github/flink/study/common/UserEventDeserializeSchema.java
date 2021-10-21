@@ -1,6 +1,5 @@
-package com.github.flink.study.schema;
+package com.github.flink.study.common;
 
-import com.github.flink.study.common.UserEvent;
 import org.apache.flink.api.common.serialization.DeserializationSchema;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.ObjectMapper;

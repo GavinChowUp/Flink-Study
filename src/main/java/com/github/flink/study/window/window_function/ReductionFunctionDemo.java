@@ -1,7 +1,7 @@
 package com.github.flink.study.window.window_function;
 
-import com.github.flink.study.common.FakeSource;
 import com.github.flink.study.common.UserEvent;
+import com.github.flink.study.source.LocalMultipleUserEventsSource;
 import org.apache.flink.api.common.eventtime.SerializableTimestampAssigner;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.common.functions.ReduceFunction;
@@ -28,7 +28,7 @@ public class ReductionFunctionDemo
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
         DataStream<UserEvent> source = env
-                .addSource(new FakeSource())
+                .addSource(new LocalMultipleUserEventsSource())
                 .name("reduce-test-source");
 
         source

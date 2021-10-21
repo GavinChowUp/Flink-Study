@@ -1,4 +1,4 @@
-package com.github.flink.study.object_header;
+package com.github.flink.study.other.object_header;
 
 import lombok.Data;
 

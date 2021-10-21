@@ -3,7 +3,7 @@ package com.github.flink.study.kafka;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.flink.study.common.UserEvent;
-import com.github.flink.study.util.EventBuilder;
+import com.github.flink.study.util.EventBuilderUtil;
 
 public class KafkaMessageSender
 {
@@ -15,7 +15,7 @@ public class KafkaMessageSender
         ObjectMapper objectMapper = new ObjectMapper();
 
         while (true) {
-            UserEvent userEvent = EventBuilder.BuildUserEvent();
+            UserEvent userEvent = EventBuilderUtil.BuildUserEvent();
             producer.send(objectMapper.writeValueAsString(userEvent));
             Thread.sleep(1000);
             System.out.println(userEvent);

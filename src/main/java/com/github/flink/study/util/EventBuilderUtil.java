@@ -8,7 +8,7 @@ import org.joda.time.DateTimeZone;
 import java.security.SecureRandom;
 import java.util.Random;
 
-public class EventBuilder
+public class EventBuilderUtil
 {
     private static final Random SECURE_RANDOM = new SecureRandom();
 

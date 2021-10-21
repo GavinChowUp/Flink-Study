@@ -1,4 +1,4 @@
-package com.github.flink.study.jackson;
+package com.github.flink.study.other.jackson;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

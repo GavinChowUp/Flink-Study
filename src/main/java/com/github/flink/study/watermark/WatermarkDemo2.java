@@ -1,7 +1,7 @@
 package com.github.flink.study.watermark;
 
 import com.github.flink.study.common.UserEvent;
-import com.github.flink.study.source.WatermarkDemoSource;
+import com.github.flink.study.source.LocalSingleUserEventSource;
 import com.github.flink.study.watermark.agg_fun.UserEventCountAgg;
 import com.github.flink.study.window.window_function.ReductionFunctionDemo;
 import org.apache.flink.api.common.eventtime.SerializableTimestampAssigner;
@@ -21,7 +21,7 @@ public class WatermarkDemo2
     {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         DataStream<UserEvent> source = env
-                .addSource(new WatermarkDemoSource())
+                .addSource(new LocalSingleUserEventSource())
                 .name("watermark-test");
         source.print("input==>");
 

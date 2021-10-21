@@ -1,11 +1,13 @@
-package com.github.flink.study.common;
+package com.github.flink.study.source;
 
+import com.github.flink.study.common.UserEvent;
+import com.github.flink.study.common.UserEventType;
 import org.apache.flink.streaming.api.functions.source.SourceFunction;
 
 import java.security.SecureRandom;
 import java.util.Random;
 
-public class FakeSource
+public class LocalMultipleUserEventsSource
         implements SourceFunction<UserEvent>
 {
     private static final Random SECURE_RANDOM = new SecureRandom();
@@ -13,12 +15,12 @@ public class FakeSource
 
     private long sleepMillis;
 
-    public FakeSource()
+    public LocalMultipleUserEventsSource()
     {
         this(1000L);
     }
 
-    private FakeSource(long sleepMills)
+    private LocalMultipleUserEventsSource(long sleepMills)
     {
         this.sleepMillis = sleepMills;
     }
