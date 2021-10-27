@@ -17,7 +17,7 @@ public class LocalMultipleUserEventsSource
 
     public LocalMultipleUserEventsSource()
     {
-        this(1000L);
+        this(10L);
     }
 
     private LocalMultipleUserEventsSource(long sleepMills)
