@@ -1,6 +1,8 @@
 package com.github.flink.study.topn;
 
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.PriorityQueue;
 
 public class PriorityQueueDemo
@@ -17,5 +19,13 @@ public class PriorityQueueDemo
         integers.add(6);
         integers.add(9);
         System.out.println(integers);
+
+        Map<Object, Object> map1 = new HashMap<>();
+        Map<Object, Object> map2 = new HashMap<>();
+
+        map1.put("1", 1);
+        map2.put("1", 1);
+
+        System.out.println(map1.equals(map2));
     }
 }

@@ -10,6 +10,8 @@ import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import java.time.Duration;
 import java.util.Properties;
@@ -36,9 +38,9 @@ public class KafkaSourceUtil
                 .map((MapFunction<String, UserEvent>) value -> objectMapper.readValue(value, UserEvent.class))
                 .assignTimestampsAndWatermarks(WatermarkStrategy.<UserEvent>forBoundedOutOfOrderness(Duration.ofSeconds(0))
                         .withTimestampAssigner((SerializableTimestampAssigner<UserEvent>) (element, recordTimestamp) -> {
+                            String currentWatermark = new DateTime((element.getEventTime() - 1), DateTimeZone.forID("+08:00")).toString("yyyy-MM-dd HH:mm:ss");
                             System.out.println("ThreadId: " + Thread.currentThread().getId()
-                                    + " currentWatermark: " + (element.getEventTime() - 1) +
-                                    "[" + element.getStringEventTime() + "]");
+                                    + "该条记录所携带的 watermark: " + currentWatermark);
                             return element.getEventTime();
                         }).withIdleness(Duration.ofSeconds(10L)));
     }
