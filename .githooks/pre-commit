@@ -18,6 +18,6 @@
 # This sample shows how to prevent push of commits where the log message starts
 # with "WIP" (work in progress).
 echo "First we run build to assure your code is right. If you want to skip it, please run git push with --no-verify."
-./gradlew clean check
-RESULT=$?
-exit $RESULT
+#./gradlew clean check
+#RESULT=$?
+#exit $RESULT

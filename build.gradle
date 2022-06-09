@@ -10,8 +10,12 @@ repositories {
   mavenCentral()
 }
 
+4.15-4.28
+
+
+
 ext {
-  flinkVersion = '1.13.2'
+  flinkVersion = '1.14.3'
   lombokVersion = '1.18.20'
 }
 

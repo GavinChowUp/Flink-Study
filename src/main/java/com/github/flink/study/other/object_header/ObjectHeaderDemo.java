@@ -1,6 +1,6 @@
 package com.github.flink.study.other.object_header;
 
-import org.apache.flink.shaded.guava18.com.google.common.collect.Lists;
+import org.apache.flink.shaded.curator4.com.google.common.collect.Lists;
 import org.openjdk.jol.info.ClassLayout;
 
 import java.util.ArrayList;
