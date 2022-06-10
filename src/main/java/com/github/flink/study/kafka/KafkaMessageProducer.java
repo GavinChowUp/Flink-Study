@@ -5,12 +5,15 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
 
+import java.security.SecureRandom;
 import java.util.Properties;
 
 public class KafkaMessageProducer
 {
     private final String topicName;
     private final KafkaProducer kafkaProducer;
+
+    private final SecureRandom secureRandom = new SecureRandom();
 
     public KafkaMessageProducer(String topicName)
     {
@@ -30,6 +33,11 @@ public class KafkaMessageProducer
 
     public void send(String message)
     {
-        kafkaProducer.send(new ProducerRecord(topicName, message));
+        if ("topic_all".equals(topicName)) {
+            kafkaProducer.send(new ProducerRecord(topicName, message));
+        }
+        else {
+            kafkaProducer.send(new ProducerRecord("topic_" + secureRandom.nextInt(10), message));
+        }
     }
 }

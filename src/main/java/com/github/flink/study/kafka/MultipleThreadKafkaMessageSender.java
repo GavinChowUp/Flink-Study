@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.flink.study.common.UserEvent;
 import com.github.flink.study.util.EventBuilderUtil;
 
-public class KafkaMessageSender
+public class MultipleThreadKafkaMessageSender
 {
     static ObjectMapper objectMapper = new ObjectMapper();
 
